@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios';
+//import axios from 'axios';
 import Modeler from 'bpmn-js/lib/Modeler';
 import { BpmnPropertiesPanelModule, BpmnPropertiesProviderModule } from 'bpmn-js-properties-panel';
 
-//import bpmnXML from './resources/initial.bpmn'
+import scheme from './resources/initial.js'
 
 
 //CSS
@@ -20,20 +20,11 @@ import 'bpmn-js-properties-panel/dist/assets/properties-panel.css';
 const App = () => {
 
   
-
-  const [ trigger, setTrigger ] = useState(false);
   const [ modeler, setModeler ] = useState();
 
   useEffect( () => {
-
     initModeler()
-
   }, []);
-
-  useEffect( () => {
-    openDiagram()
-  }, [ trigger ]);
-
 
   const initModeler = () => {
 
@@ -59,15 +50,16 @@ const App = () => {
 
   const openDiagram = async () => {
 
-  
+  /*
     const diagramUrl = 'https://cdn.staticaly.com/gh/bpmn-io/bpmn-js-examples/dfceecba/starter/diagram.bpmn';
   
     await axios(diagramUrl)
       .then( async res => {
         await modeler.importXML(res.data);
-        console.log(res.data);
+        console.log({xml: res.data, type: typeof res.data, typeXml: typeof bpmnXML, bp: bpmnXML});
       })
-  
+  */
+    await modeler.importXML(scheme());
   };
 
   return (
@@ -75,7 +67,7 @@ const App = () => {
       <div className="toolbar">
         <div 
           className="toolbar__button"
-          onClick={() => setTrigger(true)}
+          onClick={ () => openDiagram() }
           >
           Открыть диаграмму
         </div>
